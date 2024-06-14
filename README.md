@@ -39,10 +39,48 @@ export default PasswordInput;
 
 ```
 
+### React Hook - useRef
+```
+import React, { useRef, useContext } from 'react'; // Import useRef and useContext
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthProvider';
+
+const Login = () => {
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const { setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        // Perform login logic
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+
+        // Assume a login function that returns a user object on successful login
+        login(email, password).then(user => {
+            setUser(user);
+            navigate('/');
+        }).catch(error => {
+            console.error('Login error:', error);
+        });
+    };
+
+    return (
+        <div>
+            <form onSubmit={handleLogin}>
+                <input type="email" ref={emailRef} placeholder="Email" required />
+                <input type="password" ref={passwordRef} placeholder="Password" required />
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    );
+};
+
+export default Login;
+
+```
 
 
 
-## Ready to Backend using following steps
-
-
-#### `Now the question is what is middle-ware?`
+### `???`
