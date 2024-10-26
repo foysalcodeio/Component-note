@@ -1,52 +1,89 @@
 
-পেজিনেশন করতে হলে প্রথমে ব্যাকএন্ড থেকে ডাটা নিয়ে আসতে হবে লোড করে,
+1. পেজিনেশন করতে হলে প্রথমে ব্যাকএন্ড থেকে ডাটা নিয়ে আসতে হবে লোড করে,
  {
         path: '/',
         element: <Shop></Shop>,
         loader: () => fetch('http://localhost:5000/productCount')
  },
 
-তারপর লোড করতে হবে 
+2. তারপর লোড করতে হবে 
 const { count } = useLoaderData();
     // console.log(count)
   মনে রাখতে হবে এটাকে ইনিশিয়ালি 10 টা ডাটা ডিক্লায়ার করতে হবে
   const [itemsPerPage, setItemPerPage] = useState(10)
 
-ফাংশনাল কোড: 
-    const [cart, setCart] = useState([])
-    const [itemsPerPage, setItemPerPage] = useState(10)
 
-    const { count } = useLoaderData();
-    // console.log(count)
 
-    const numberOfPages = Math.ceil(count / itemsPerPage);
+3. ভ্যারিয়েবল ডিক্লারায়েশন
 
-    // example-1
-    // const pages = []
-    // for(let i=0; i<numberOfPages; i++){
-    //     pages.push(i);
-    //     console.log(pages); 
-    // }
+   const [currentPage, setCurrentPage] = useState(0);
+   const [listItemsPerPage, setItemPerPage] = useState(5)
 
-    // you can use instead for loop
-    // [...Array(5).keys()]
+   const { count } = useLoaderData();
+   // console.log(count)
 
-    // example-2
-    const pages = [...Array(numberOfPages).keys()]
-    console.log(pages);
+   const numberOfPages = Math.ceil(count / listItemsPerPage);
 
-এইচটিএমএল কোড: 
-<div className='pagination'>
-  {
-      pages.map(page =>  <button key={page}>{page}</button> )
-  }
-  <select value={itemsPerPage} onChange={handleItemPerPage}>
-      <option value="5">5</option>
-      <option value="10">10</option>
-      <option value="20">20</option>
-      <option value="50">50</option>
-  </select>
-</div>
+   // example-1
+   // const pages = []
+   // for(let i=0; i<numberOfPages; i++){
+   //     pages.push(i);
+   //     console.log(pages); 
+   // }
+
+   // you can use instead for loop
+   // [...Array(5).keys()]
+
+   // example-2
+   const pages = [...Array(numberOfPages).keys()]
+   console.log(pages);
+
+
+
+
+
+4. ফাংশনাল কোড: 
+const handleItemPerPage = e => {
+        const val = parseInt(e.target.value);
+        console.log(e.target.value);
+        setItemPerPage(val);
+        setCurrentPage(0);
+    }
+    const handlePrevPage = () => {
+        if(currentPage > 0){
+            setCurrentPage(currentPage-1)
+        }
+    }
+    const handleNextPage = () => {
+        if(currentPage < pages.length-1){
+            setCurrentPage(currentPage+1)
+        }
+    }
+
+
+
+
+
+5. এইচটিএমএল কোড: 
+ <div className='pagination'>
+            <p>Current page : {currentPage}</p>
+            <button onClick={handlePrevPage}>Prev</button>
+                {
+                    pages.map(page =>  <button
+                        className={currentPage === page ? 'selected' : 'undefined'}
+                         onClick={()=> setCurrentPage(page)}
+                         key={page}
+                         >{page}</button>)
+                }
+            <button onClick={handleNextPage}>Next</button>
+                <select value={listItemsPerPage} onChange={handleItemPerPage}>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+            </div>
+        </div>
 
 
 
