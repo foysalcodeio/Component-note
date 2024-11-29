@@ -98,3 +98,16 @@ const ActiveLink = ({ to, children }) => {
 
 export default ActiveLink;
 ```
+
+### `Skeleton Example - that's easy !!1 `
+```
+const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setTimeout(()=>{
+            setLoading(false);
+        }, 2000)
+    }, [])
+
+{loading ? condition 1 : condition2}
+```
