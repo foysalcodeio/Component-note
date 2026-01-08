@@ -20,7 +20,7 @@ export default Payment;
 ```
 secret key ইউজ হয় ব্যাকইন্ডে
 ```
-const stripe = require("stripe")("YOUR_SECRET_KEY");
+const stripe = require("stripe")("process.env.PAYMENT_GATEWAY_KEY");
 ```
 
 
